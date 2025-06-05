@@ -1,0 +1,72 @@
+body {
+			font-family: 'Inter', sans-serif;
+			/* Fuente Inter como se sugiere en las directrices generales */
+		}
+
+		.hero-section {
+			background: url('https://placehold.co/1920x600/343a40/ffffff?text=Bienvenidos+a+AutoPartes+Express') no-repeat center center;
+			background-size: cover;
+			color: white;
+			padding: 8rem 0;
+			text-align: center;
+		}
+
+		.hero-section h1 {
+			font-size: 3.5rem;
+			font-weight: bold;
+			text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+		}
+
+		.hero-section p {
+			font-size: 1.5rem;
+			margin-bottom: 2rem;
+			text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+		}
+
+		.card-img-top {
+			width: 100%;
+			height: 200px;
+			object-fit: cover;
+			/* Para que las imágenes se ajusten bien */
+		}
+
+		.category-card {
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+
+		.category-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+		}
+
+		.footer {
+			background-color: #343a40;
+			color: white;
+			padding: 3rem 0;
+		}
+
+		.footer a {
+			color: #adb5bd;
+			text-decoration: none;
+		}
+
+		.footer a:hover {
+			color: #ffffff;
+		}
+
+		.search-bar-container {
+			background-color: #f8f9fa;
+			padding: 2rem 0;
+			margin-bottom: 2rem;
+		}
+
+		.section-title {
+			margin-bottom: 2rem;
+			font-weight: bold;
+			color: #343a40;
+		}
+
+		.navbar-brand img {
+			max-height: 50px;
+			/* Ajusta la altura del logo */
+		}
