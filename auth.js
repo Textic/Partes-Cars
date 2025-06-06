@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
     const currentPage = window.location.pathname.split("/").pop();
 
-    // Referencias a los elementos del menú de navegación
     const loginLink = document.getElementById('login-link');
     const registerLink = document.getElementById('register-link');
     const profileLink = document.getElementById('profile-link');

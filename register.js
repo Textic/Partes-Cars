@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const userPassword = document.getElementById('register-password').value;
             const confirmPassword = document.getElementById('register-confirm-password').value;
             
-            // --- INICIO DE VALIDACIONES ---
             if (!userName || !userEmail || !userPassword || !confirmPassword) {
                 alert('Por favor, completa todos los campos.');
                 return;
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // Expresiones regulares para validar la contraseña
             const hasUpperCase = /[A-Z]/.test(userPassword);
             const hasLowerCase = /[a-z]/.test(userPassword);
             const hasNumber = /[0-9]/.test(userPassword);
@@ -38,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert(errorMessage);
                 return;
             }
-            // --- FIN DE VALIDACIONES ---
 
             let users = JSON.parse(localStorage.getItem('users')) || [];
 
