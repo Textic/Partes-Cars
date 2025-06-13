@@ -1,0 +1,45 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="index.html">
+			<img src="https://placehold.co/150x50/cccccc/000000?text=AutoPartesLogo" alt="Logo AutoPartes Express">
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="index.html"><i class="fas fa-home me-1"></i>Inicio</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="products.html"><i class="fas fa-car-battery me-1"></i>Productos</a>
+				</li>
+				<li class="nav-item" *ngIf="isLogged">
+					<a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart me-1"></i>Carrito <span class="badge bg-primary rounded-pill" id="cart-count">0</span></a>
+				</li>
+				<li class="nav-item dropdown" ngbDropdown *ngIf="isLogged">
+					<a class="nav-link dropdown-toggle" id="userAccountDropdown" ngbDropdownToggle role="button">
+						<i class="fas fa-user-circle me-1"></i><span id="account-name">Cuenta</span>
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="userAccountDropdown">
+						<li id="profile-link"><a class="dropdown-item" href="profile.html"><i class="fas fa-id-card me-1"></i>Mi Perfil</a></li>
+						<li id="logout-divider"><hr class="dropdown-divider"></li>
+						<li id="logout-button-li">
+							<a class="dropdown-item" href="#" id="logout-button">
+								<i class="fas fa-sign-out-alt me-1"></i>
+								Cerrar Sesión
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item" *ngIf="!isLogged">
+					<a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión</a>
+				</li>
+				<li class="nav-item" id="admin-link" *ngIf="isAdmin">
+					<a class="nav-link" href="admin_dashboard.html"><i class="fas fa-tachometer-alt me-1"></i>Admin</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>

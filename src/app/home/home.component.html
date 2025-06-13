@@ -1,265 +1,118 @@
-<!DOCTYPE html>
-<html lang="es">
+<app-navbar></app-navbar>
+<header id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button *ngFor="let slide of carouselSlides; let i = index" type="button" data-bs-target="#heroCarousel"
+			[attr.data-bs-slide-to]="i" [class.active]="slide.active" [attr.aria-current]="slide.active ? 'true' : null"
+			[attr.aria-label]="'Diapositiva ' + (i+1)"></button>
+	</div>
+	<div class="carousel-inner">
+		<div *ngFor="let slide of carouselSlides; let i = index" class="carousel-item" [class.active]="slide.active">
+			<img [src]="slide.img" class="d-block w-100" [alt]="slide.alt">
+			<div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
+				<h5>{{slide.title}}</h5>
+				<p>{{slide.desc}}</p>
+				<a [href]="slide.link" class="btn btn-primary rounded-pill">{{slide.linkText}}</a>
+			</div>
+		</div>
+	</div>
+	<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Anterior</span>
+	</button>
+	<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Siguiente</span>
+	</button>
+</header>
 
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>AutoPartes Express - Inicio</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<section class="search-bar-container">
+	<div class="container">
+		<h2 class="text-center section-title pt-4">Encuentra la Parte que Necesitas</h2>
+		<form class="row g-3 justify-content-center" id="mainSearchForm">
+			<div class="col-md-6">
+				<label for="mainSearchInput" class="visually-hidden">Buscar productos</label>
+				<input type="text" class="form-control form-control-lg rounded-pill" id="mainSearchInput"
+					placeholder="Ej: Pastillas de freno Toyota Yaris 2018...">
+			</div>
+			<div class="col-md-2">
+				<button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill"><i
+						class="fas fa-search me-2"></i>Buscar</button>
+			</div>
+		</form>
+	</div>
+</section>
 
-<body>
+<main class="container my-5">
+	<h2 class="text-center section-title">Productos Destacados</h2>
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+		<div class="col" *ngFor="let product of featuredProducts">
+			<div class="card h-100 shadow-sm rounded-3">
+				<img [src]="product.img" class="card-img-top" [alt]="product.alt">
+				<div class="card-body d-flex flex-column">
+					<h5 class="card-title">{{product.title}}</h5>
+					<p class="card-text small text-muted">{{product.desc}}</p>
+					<p class="card-text fs-5 fw-bold text-primary mt-auto">{{product.price}}</p>
+					<a [href]="product.link" class="btn btn-outline-primary rounded-pill mt-2">Ver Detalles</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
 
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="index.html">
-				<img src="https://placehold.co/150x50/cccccc/000000?text=AutoPartesLogo" alt="Logo AutoPartes Express">
+<section class="container my-5">
+	<h2 class="text-center section-title">Explora por Categorías</h2>
+	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+		<div class="col" *ngFor="let cat of categories">
+			<a [href]="cat.link" class="text-decoration-none">
+				<div class="card category-card h-100 shadow-sm rounded-3 text-center">
+					<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+						<i [class]="cat.icon + ' fa-3x text-primary mb-3'"></i>
+						<h5 class="card-title mb-0">{{cat.title}}</h5>
+					</div>
+				</div>
 			</a>
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="index.html"><i class="fas fa-home me-1"></i>Inicio</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="products.html"><i class="fas fa-car-battery me-1"></i>Productos</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="cart.html"><i class="fas fa-shopping-cart me-1"></i>Carrito <span class="badge bg-primary rounded-pill" id="cart-count">0</span></a>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="userAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							<i class="fas fa-user-circle me-1"></i><span id="account-name">Cuenta</span>
-						</a>
-						<ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userAccountDropdown">
-							<li id="login-link"><a class="dropdown-item" href="login.html"><i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión</a></li>
-							<li id="register-link"><a class="dropdown-item" href="register.html"><i class="fas fa-user-plus me-1"></i>Registrarse</a></li>
-							<li id="profile-link" style="display: none;"><a class="dropdown-item" href="profile.html"><i class="fas fa-id-card me-1"></i>Mi Perfil</a></li>
-							<li id="logout-divider" style="display: none;"><hr class="dropdown-divider"></li>
-							<li id="logout-button-li" style="display: none;"><a class="dropdown-item" href="#" id="logout-button"><i class="fas fa-sign-out-alt me-1"></i>Cerrar Sesión</a></li>
-						</ul>
-					</li>
-					<li class="nav-item" id="admin-link" style="display: none;">
-						<a class="nav-link" href="admin_dashboard.html"><i class="fas fa-tachometer-alt me-1"></i>Admin</a>
-					</li>
+		</div>
+	</div>
+</section>
+
+<footer class="footer mt-auto py-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mb-3">
+				<h5>AutoPartes Express</h5>
+				<p class="small">Tu tienda de confianza para repuestos de automóviles. Calidad y servicio al mejor
+					precio.</p>
+			</div>
+			<div class="col-md-2 mb-3">
+				<h5>Enlaces Rápidos</h5>
+				<ul class="list-unstyled">
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="products.html">Productos</a></li>
+					<li><a href="#">Sobre Nosotros</a></li>
+					<li><a href="#">Contacto</a></li>
 				</ul>
 			</div>
-		</div>
-	</nav>
-
-	<header id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-		<div class="carousel-indicators">
-			<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-				aria-label="Diapositiva 1"></button>
-			<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"
-				aria-label="Diapositiva 2"></button>
-			<button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"
-				aria-label="Diapositiva 3"></button>
-		</div>
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<img src="https://placehold.co/1920x500/55595c/ffffff?text=Oferta+Especial+en+Frenos"
-					class="d-block w-100" alt="Oferta Especial en Frenos">
-				<div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-					<h5>¡Oferta Especial en Sistemas de Frenos!</h5>
-					<p>Hasta 30% de descuento en pastillas y discos seleccionados.</p>
-					<a href="products.html?category=frenos" class="btn btn-primary rounded-pill">Ver Ofertas</a>
-				</div>
+			<div class="col-md-3 mb-3">
+				<h5>Información Legal</h5>
+				<ul class="list-unstyled">
+					<li><a href="#">Términos y Condiciones</a></li>
+					<li><a href="#">Política de Privacidad</a></li>
+					<li><a href="#">Política de Devoluciones</a></li>
+				</ul>
 			</div>
-			<div class="carousel-item">
-				<img src="https://placehold.co/1920x500/6c757d/ffffff?text=Nuevos+Filtros+de+Aire" class="d-block w-100"
-					alt="Nuevos Filtros de Aire">
-				<div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-					<h5>Nuevos Filtros de Aire de Alto Rendimiento</h5>
-					<p>Mejora la eficiencia de tu motor con nuestra nueva línea.</p>
-					<a href="products.html?category=filtros" class="btn btn-primary rounded-pill">Descubrir</a>
-				</div>
-			</div>
-			<div class="carousel-item">
-				<img src="https://placehold.co/1920x500/778899/ffffff?text=Accesorios+Exclusivos" class="d-block w-100"
-					alt="Accesorios Exclusivos">
-				<div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
-					<h5>Accesorios Exclusivos para tu Vehículo</h5>
-					<p>Personaliza tu auto con estilo y calidad.</p>
-					<a href="products.html?category=accesorios" class="btn btn-primary rounded-pill">Ver Accesorios</a>
-				</div>
+			<div class="col-md-3 mb-3">
+				<h5>Síguenos</h5>
+				<a href="#" class="me-2"><i class="fab fa-facebook fa-2x"></i></a>
+				<a href="#" class="me-2"><i class="fab fa-instagram fa-2x"></i></a>
+				<a href="#" class="me-2"><i class="fab fa-twitter fa-2x"></i></a>
 			</div>
 		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Anterior</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Siguiente</span>
-		</button>
-	</header>
-
-	<section class="search-bar-container">
-		<div class="container">
-			<h2 class="text-center section-title pt-4">Encuentra la Parte que Necesitas</h2>
-			<form class="row g-3 justify-content-center" id="mainSearchForm">
-				<div class="col-md-6">
-					<label for="mainSearchInput" class="visually-hidden">Buscar productos</label>
-					<input type="text" class="form-control form-control-lg rounded-pill" id="mainSearchInput"
-						placeholder="Ej: Pastillas de freno Toyota Yaris 2018...">
-				</div>
-				<div class="col-md-2">
-					<button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill"><i
-							class="fas fa-search me-2"></i>Buscar</button>
-				</div>
-			</form>
+		<hr class="my-4">
+		<div class="text-center">
+			<p class="mb-0 small">&copy; <span id="currentYear"></span> AutoPartes Express. Todos los derechos reservados.
+			</p>
 		</div>
-	</section>
+	</div>
+</footer>
 
-	<main class="container my-5">
-		<h2 class="text-center section-title">Productos Destacados</h2>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-			<div class="col">
-				<div class="card h-100 shadow-sm rounded-3">
-					<img src="https://placehold.co/300x200/E8E8E8/000000?text=Pastillas+de+Freno" class="card-img-top"
-						alt="Pastillas de Freno">
-					<div class="card-body d-flex flex-column">
-						<h5 class="card-title">Pastillas de Freno Cerámicas</h5>
-						<p class="card-text small text-muted">Marca XYZ - Alta durabilidad</p>
-						<p class="card-text fs-5 fw-bold text-primary mt-auto">$35.990</p>
-						<a href="product_detail.html?id=1" class="btn btn-outline-primary rounded-pill mt-2">Ver
-							Detalles</a>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="card h-100 shadow-sm rounded-3">
-					<img src="https://placehold.co/300x200/D3D3D3/000000?text=Filtro+de+Aceite" class="card-img-top"
-						alt="Filtro de Aceite">
-					<div class="card-body d-flex flex-column">
-						<h5 class="card-title">Filtro de Aceite Premium</h5>
-						<p class="card-text small text-muted">Compatible con múltiples modelos</p>
-						<p class="card-text fs-5 fw-bold text-primary mt-auto">$12.500</p>
-						<a href="product_detail.html?id=2" class="btn btn-outline-primary rounded-pill mt-2">Ver
-							Detalles</a>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="card h-100 shadow-sm rounded-3">
-					<img src="https://placehold.co/300x200/C0C0C0/000000?text=Batería+de+Auto" class="card-img-top"
-						alt="Batería de Auto">
-					<div class="card-body d-flex flex-column">
-						<h5 class="card-title">Batería de Auto 60Ah</h5>
-						<p class="card-text small text-muted">Larga duración y arranque seguro</p>
-						<p class="card-text fs-5 fw-bold text-primary mt-auto">$78.000</p>
-						<a href="product_detail.html?id=3" class="btn btn-outline-primary rounded-pill mt-2">Ver
-							Detalles</a>
-					</div>
-				</div>
-			</div>
-			<div class="col">
-				<div class="card h-100 shadow-sm rounded-3">
-					<img src="https://placehold.co/300x200/A9A9A9/000000?text=Amortiguador" class="card-img-top"
-						alt="Amortiguador">
-					<div class="card-body d-flex flex-column">
-						<h5 class="card-title">Amortiguador Delantero</h5>
-						<p class="card-text small text-muted">Marca ACME - Confort y seguridad</p>
-						<p class="card-text fs-5 fw-bold text-primary mt-auto">$45.990</p>
-						<a href="product_detail.html?id=4" class="btn btn-outline-primary rounded-pill mt-2">Ver
-							Detalles</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</main>
-
-	<section class="container my-5">
-		<h2 class="text-center section-title">Explora por Categorías</h2>
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-			<div class="col">
-				<a href="products.html?category=frenos" class="text-decoration-none">
-					<div class="card category-card h-100 shadow-sm rounded-3 text-center">
-						<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-							<i class="fas fa-car-brake fa-3x text-primary mb-3"></i>
-							<h5 class="card-title mb-0">Frenos</h5>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col">
-				<a href="products.html?category=suspension" class="text-decoration-none">
-					<div class="card category-card h-100 shadow-sm rounded-3 text-center">
-						<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-							<i class="fas fa-cogs fa-3x text-primary mb-3"></i>
-							<h5 class="card-title mb-0">Suspensión</h5>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col">
-				<a href="products.html?category=motor" class="text-decoration-none">
-					<div class="card category-card h-100 shadow-sm rounded-3 text-center">
-						<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-							<i class="fas fa-oil-can fa-3x text-primary mb-3"></i>
-							<h5 class="card-title mb-0">Motor</h5>
-						</div>
-					</div>
-				</a>
-			</div>
-			<div class="col">
-				<a href="products.html?category=electricidad" class="text-decoration-none">
-					<div class="card category-card h-100 shadow-sm rounded-3 text-center">
-						<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
-							<i class="fas fa-bolt fa-3x text-primary mb-3"></i>
-							<h5 class="card-title mb-0">Electricidad</h5>
-						</div>
-					</div>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<footer class="footer mt-auto py-5">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-4 mb-3">
-					<h5>AutoPartes Express</h5>
-					<p class="small">Tu tienda de confianza para repuestos de automóviles. Calidad y servicio al mejor
-						precio.</p>
-				</div>
-				<div class="col-md-2 mb-3">
-					<h5>Enlaces Rápidos</h5>
-					<ul class="list-unstyled">
-						<li><a href="index.html">Inicio</a></li>
-						<li><a href="products.html">Productos</a></li>
-						<li><a href="#">Sobre Nosotros</a></li>
-						<li><a href="#">Contacto</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 mb-3">
-					<h5>Información Legal</h5>
-					<ul class="list-unstyled">
-						<li><a href="#">Términos y Condiciones</a></li>
-						<li><a href="#">Política de Privacidad</a></li>
-						<li><a href="#">Política de Devoluciones</a></li>
-					</ul>
-				</div>
-				<div class="col-md-3 mb-3">
-					<h5>Síguenos</h5>
-					<a href="#" class="me-2"><i class="fab fa-facebook fa-2x"></i></a>
-					<a href="#" class="me-2"><i class="fab fa-instagram fa-2x"></i></a>
-					<a href="#" class="me-2"><i class="fab fa-twitter fa-2x"></i></a>
-				</div>
-			</div>
-			<hr class="my-4">
-			<div class="text-center">
-				<p class="mb-0 small">&copy; <span id="currentYear"></span> AutoPartes Express. Todos los derechos reservados.</p>
-			</div>
-		</div>
-	</footer>
-
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
-</html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
