@@ -23,10 +23,10 @@
 						<i class="fas fa-user-circle me-1"></i><span id="account-name">Cuenta</span>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="userAccountDropdown">
-						<li id="profile-link"><a class="dropdown-item" href="profile.html"><i class="fas fa-id-card me-1"></i>Mi Perfil</a></li>
+						<li id="profile-link"><a routerLink="/profile" class="dropdown-item"><i class="fas fa-id-card me-1"></i>Mi Perfil</a></li>
 						<li id="logout-divider"><hr class="dropdown-divider"></li>
 						<li id="logout-button-li">
-							<a class="dropdown-item" href="#" id="logout-button">
+							<a class="dropdown-item" href="#" id="logout-button" (click)="logout()">
 								<i class="fas fa-sign-out-alt me-1"></i>
 								Cerrar Sesión
 							</a>
@@ -34,7 +34,7 @@
 					</ul>
 				</li>
 				<li class="nav-item" *ngIf="!isLogged">
-					<a class="nav-link" href="login.html"><i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión</a>
+					<a class="nav-link" routerLink="/login"><i class="fas fa-sign-in-alt me-1"></i>Iniciar Sesión</a>
 				</li>
 				<li class="nav-item" id="admin-link" *ngIf="isAdmin">
 					<a class="nav-link" href="admin_dashboard.html"><i class="fas fa-tachometer-alt me-1"></i>Admin</a>

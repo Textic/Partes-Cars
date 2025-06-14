@@ -1,0 +1,75 @@
+<app-navbar></app-navbar>
+<main class="container my-5">
+	<h1 class="mb-4">Mi Perfil</h1>
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<div class="card">
+				<div class="card-header">
+					Información Personal
+				</div>
+				<div class="card-body">
+					<form id="profileForm">
+						<div class="mb-3">
+							<label for="profileNombre" class="form-label">Nombre</label>
+							<input type="text" class="form-control" id="profileNombre" value="{{ user.name }}" required>
+						</div>
+						<div class="mb-3">
+							<label for="profileApellido" class="form-label">Apellido</label>
+							<input type="text" class="form-control" id="profileApellido" value="{{ user.secondName }}" required>
+						</div>
+						<div class="mb-3">
+							<label for="profileEmail" class="form-label">Correo Electronico</label>
+							<input type="email" class="form-control" id="profileEmail" value="{{ user.email }}" required>
+						</div>
+						<button type="submit" class="btn btn-primary">Guardar Cambios</button>
+					</form>
+				</div>
+			</div>
+
+			<div class="card mt-4">
+				<div class="card-header">
+					Cambiar Contraseña
+				</div>
+				<div class="card-body">
+					<form id="changePasswordForm">
+						<div class="mb-3">
+							<label for="currentPassword" class="form-label">Contraseña Actual</label>
+							<input type="password" class="form-control" id="currentPassword" required>
+						</div>
+						<div class="mb-3">
+							<label for="newPassword" class="form-label">Nueva Contraseña</label>
+							<input type="password" class="form-control" id="newPassword" required>
+						</div>
+						<div class="mb-3">
+							<label for="confirmNewPassword" class="form-label">Confirmar Nueva Contraseña</label>
+							<input type="password" class="form-control" id="confirmNewPassword" required>
+						</div>
+						<button type="submit" class="btn btn-warning">Cambiar Contraseña</button>
+					</form>
+				</div>
+			</div>
+				<div class="card mt-4">
+				<div class="card-header">
+					Mis Pedidos
+				</div>
+				<div class="card-body">
+					<p>Aquí se mostraría un resumen o enlace al historial de pedidos.</p>
+					<a href="order_history.html" class="btn btn-info">Ver Historial de Pedidos</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<footer class="footer mt-auto py-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mb-3"><h5>AutoPartes Express</h5><p class="small">Tu tienda de confianza para repuestos de automóviles. Calidad y servicio al mejor precio.</p></div>
+			<div class="col-md-2 mb-3"><h5>Enlaces Rápidos</h5><ul class="list-unstyled"><li><a href="index.html">Inicio</a></li><li><a href="products.html">Productos</a></li><li><a href="#">Sobre Nosotros</a></li><li><a href="#">Contacto</a></li></ul></div>
+			<div class="col-md-3 mb-3"><h5>Información Legal</h5><ul class="list-unstyled"><li><a href="#">Términos y Condiciones</a></li><li><a href="#">Política de Privacidad</a></li><li><a href="#">Política de Devoluciones</a></li></ul></div>
+			<div class="col-md-3 mb-3"><h5>Síguenos</h5><a href="#" class="me-2"><i class="fab fa-facebook fa-2x"></i></a><a href="#" class="me-2"><i class="fab fa-instagram fa-2x"></i></a><a href="#" class="me-2"><i class="fab fa-twitter fa-2x"></i></a></div>
+		</div>
+		<hr class="my-4">
+		<div class="text-center"><p class="mb-0 small">&copy; <span id="currentYear"></span> AutoPartes Express. Todos los derechos reservados.</p><p class="small">Desarrollado para DSY2202 - Duoc UC</p></div>
+	</div>
+</footer>

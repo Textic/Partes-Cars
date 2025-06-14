@@ -1,0 +1,69 @@
+<app-navbar></app-navbar>
+<main class="container my-5">
+	<div class="row justify-content-center">
+		<div class="col-md-6 col-lg-5">
+			<div class="card shadow-sm">
+				<div class="card-body p-4 p-md-5">
+					<h1 class="card-title text-center mb-4 fs-3">Iniciar Sesión</h1>
+					<form id="loginForm" (ngSubmit)="login()" #form="ngForm">
+						<div class="mb-3">
+							<label for="emailLogin" class="form-label">Correo Electrónico</label>
+							<input type="email" class="form-control" id="emailLogin" name="email" [(ngModel)]="email" required>
+						</div>
+						<div class="mb-3">
+							<label for="passwordLogin" class="form-label">Contraseña</label>
+							<input type="password" class="form-control" id="passwordLogin" name="password" [(ngModel)]="password" required>
+						</div>
+						<div *ngIf="error" class="alert alert-danger mb-3">{{ error }}</div>
+						<div class="d-grid mb-3">
+							<button type="submit" class="btn btn-primary">Ingresar</button>
+						</div>
+						<div class="text-center">
+							<p class="mb-1"><a href="recover_password.html">¿Olvidaste tu contraseña?</a></p>
+							<p class="mb-0">¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<footer class="footer mt-auto py-5">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 mb-3">
+				<h5>AutoPartes Express</h5>
+				<p class="small">Tu tienda de confianza para repuestos de automóviles. Calidad y servicio al mejor precio.</p>
+			</div>
+			<div class="col-md-2 mb-3">
+				<h5>Enlaces Rápidos</h5>
+				<ul class="list-unstyled">
+					<li><a href="index.html">Inicio</a></li>
+					<li><a href="products.html">Productos</a></li>
+					<li><a href="#">Sobre Nosotros</a></li>
+					<li><a href="#">Contacto</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 mb-3">
+				<h5>Información Legal</h5>
+				<ul class="list-unstyled">
+					<li><a href="#">Términos y Condiciones</a></li>
+					<li><a href="#">Política de Privacidad</a></li>
+					<li><a href="#">Política de Devoluciones</a></li>
+				</ul>
+			</div>
+			<div class="col-md-3 mb-3">
+				<h5>Síguenos</h5>
+				<a href="#" class="me-2"><i class="fab fa-facebook fa-2x"></i></a>
+				<a href="#" class="me-2"><i class="fab fa-instagram fa-2x"></i></a>
+				<a href="#" class="me-2"><i class="fab fa-twitter fa-2x"></i></a>
+			</div>
+		</div>
+		<hr class="my-4">
+		<div class="text-center">
+			<p class="mb-0 small">&copy; <span id="currentYear"></span> AutoPartes Express. Todos los derechos reservados.</p>
+				<p class="small">Desarrollado para DSY2202 - Duoc UC</p>
+		</div>
+	</div>
+</footer>
