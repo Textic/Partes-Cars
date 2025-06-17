@@ -11,15 +11,15 @@
 					<form id="profileForm">
 						<div class="mb-3">
 							<label for="profileNombre" class="form-label">Nombre</label>
-							<input type="text" class="form-control" id="profileNombre" value="{{ user.name }}" required>
+							<input type="text" class="form-control" id="profileNombre" value="{{ user?.nombre }}" required>
 						</div>
 						<div class="mb-3">
 							<label for="profileApellido" class="form-label">Apellido</label>
-							<input type="text" class="form-control" id="profileApellido" value="{{ user.secondName }}" required>
+							<input type="text" class="form-control" id="profileApellido" value="{{ user?.apellido }}" required>
 						</div>
 						<div class="mb-3">
 							<label for="profileEmail" class="form-label">Correo Electronico</label>
-							<input type="email" class="form-control" id="profileEmail" value="{{ user.email }}" required>
+							<input type="email" class="form-control" id="profileEmail" value="{{ user?.correo }}" required>
 						</div>
 						<button type="submit" class="btn btn-primary">Guardar Cambios</button>
 					</form>
