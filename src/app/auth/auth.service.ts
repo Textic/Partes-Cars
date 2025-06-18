@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Usuario } from './usuario.interface';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ export class AuthService {
   private usuarioActualSubject = new BehaviorSubject<Usuario | null>(null);
   public usuarioActual$ = this.usuarioActualSubject.asObservable();
 
+  private readonly STORAGE_KEY = 'appUsuarios';
   private usuarios: Usuario[] = [
     {
       nombre: 'Juan',
@@ -73,5 +74,42 @@ export class AuthService {
     }
     this.usuarioActualSubject.next(null);
     this.router.navigate(['/home']);
+  }
+
+  register(usuario: Usuario): Observable<boolean> {
+    const existeUsuario = this.usuarios.some(u => u.correo === usuario.correo);
+    if (existeUsuario) {
+      return throwError(() => new Error('El correo electrónico ya está registrado.'));
+    }
+
+    if (usuario.clave.length < 8) {
+      return throwError(() => new Error('La contraseña debe tener al menos 8 caracteres.'));
+    }
+    
+    this.usuarios.push(usuario);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.usuarios));
+    }
+    return of(true);
+  }
+
+  recoverPassword(correo: string, nuevaClave: string): Observable<boolean> {
+    const usuarioIndex = this.usuarios.findIndex(u => u.correo === correo);
+
+    if (usuarioIndex === -1) {
+      return throwError(() => new Error('El correo electrónico no se encuentra registrado.'));
+    }
+
+    if (nuevaClave.length < 8) {
+      return throwError(() => new Error('La nueva contraseña debe tener al menos 8 caracteres.'));
+    }
+
+    this.usuarios[usuarioIndex].clave = nuevaClave;
+
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.usuarios));
+    }
+
+    return of(true);
   }
 }

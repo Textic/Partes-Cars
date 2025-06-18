@@ -19,9 +19,10 @@
 							<button type="submit" class="btn btn-primary">Ingresar</button>
 						</div>
 						<div class="text-center">
-							<p class="mb-1"><a href="recover_password.html">¿Olvidaste tu contraseña?</a></p>
-							<p class="mb-0">¿No tienes cuenta? <a href="register.html">Regístrate aquí</a></p>
+							<a routerLink="/recover-password" class="form-text">¿Olvidaste tu contraseña?</a>
+							<p class="mb-0">¿No tienes cuenta? <a routerLink="/register">Regístrate aquí</a></p>
 						</div>
+						<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
 					</form>
 				</div>
 			</div>

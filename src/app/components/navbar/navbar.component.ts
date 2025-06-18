@@ -16,6 +16,7 @@ import { Subscription } from 'rxjs';
 export class NavbarComponent implements OnInit, OnDestroy {
   isLogged = false;
   isAdmin = false;
+  userName: string = 'Cuenta';
   private usuarioSuscripcion!: Subscription;
 
   constructor(private authService: AuthService) { }
@@ -29,6 +30,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private actualizarEstado(usuario: Usuario | null) {
     this.isLogged = !!usuario;
     this.isAdmin = usuario?.rol === 'admin';
+    this.userName = usuario ? usuario.nombre : 'Cuenta';
   }
 
   logout(event: Event) {

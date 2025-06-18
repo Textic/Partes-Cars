@@ -1,0 +1,89 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+	<div class="row">
+		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse show">
+			<div class="position-sticky pt-3">
+				<ul class="nav flex-column">
+					<li class="nav-item">
+						<a class="nav-link active" aria-current="page" href="#">
+							<i class="fas fa-tachometer-alt"></i>Dashboard
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-box-open"></i>Productos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-tags"></i>Categorías
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-file-invoice-dollar"></i>Pedidos
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fas fa-users"></i>Usuarios
+						</a>
+					</li>
+						<li class="nav-item mt-3">
+						<a class="nav-link" routerLink="/home">
+							<i class="fas fa-arrow-left"></i>Volver al Sitio
+						</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+				<h1 class="h2">Dashboard</h1>
+			</div>
+
+			<div *ngIf="admin" class="alert alert-info">
+				¡Bienvenido, {{ admin.nombre }}! Estás en el panel de administración.
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+					<div class="card text-white bg-primary mb-3">
+						<div class="card-header">Productos Totales</div>
+						<div class="card-body">
+							<h5 class="card-title">150</h5>
+							<p class="card-text">Productos en el inventario.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card text-white bg-success mb-3">
+						<div class="card-header">Pedidos Recientes</div>
+						<div class="card-body">
+							<h5 class="card-title">25</h5>
+							<p class="card-text">Pedidos en la última semana.</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card text-white bg-info mb-3">
+						<div class="card-header">Usuarios Registrados</div>
+						<div class="card-body">
+							<h5 class="card-title">75</h5>
+							<p class="card-text">Clientes activos.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<h2 class="mt-4">Acciones Rápidas</h2>
+			<p>
+				<a href="#" class="btn btn-lg btn-outline-secondary me-2">Gestionar Productos</a>
+				<a href="#" class="btn btn-lg btn-outline-secondary">Ver Pedidos</a>
+			</p>
+
+		</main>
+	</div>
+</div>
