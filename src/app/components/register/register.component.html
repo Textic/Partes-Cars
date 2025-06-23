@@ -5,7 +5,7 @@
 			<div class="card shadow-sm">
 				<div class="card-body p-4 p-md-5">
 					<h1 class="card-title text-center mb-4 fs-3">Crear una Cuenta</h1>
-					<form (ngSubmit)="registrarUsuario()" #registerForm="ngForm">
+					<form (ngSubmit)="registrarUsuario(registerForm)" #registerForm="ngForm">
 						<div class="mb-3">
 							<label for="register-name" class="form-label">Nombre</label>
 							<input type="text" class="form-control" id="register-name" name="nombre" [(ngModel)]="nombre" required #nombreInput="ngModel">
@@ -15,14 +15,14 @@
 							<input type="text" class="form-control" id="register-apellido" name="apellido" [(ngModel)]="apellido" required #apellidoInput="ngModel">
 						</div>
 						<div class="mb-3">
-							<label for="register-email" class="form-label">Correo Electrónico</label>
+							<label for="register-email" class="form-label">Correo electronico</label>
 							<input type="email" class="form-control" id="register-email" name="correo" [(ngModel)]="correo" required #correoInput="ngModel">
 						</div>
 						<div class="mb-3">
-							<label for="register-password" class="form-label">Contraseña</label>
+							<label for="register-password" class="form-label">Contrasena</label>
 							<input type="password" class="form-control" id="register-password" name="clave" [(ngModel)]="clave" required #claveInput="ngModel">
 							<div class="form-text">
-								Debe tener al menos 8 caracteres.
+								Debe tener al menos 8 caracteres y al menos un numero.
 							</div>
 						</div>
 						<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
@@ -31,7 +31,7 @@
 							<button type="submit" class="btn btn-primary btn-lg" [disabled]="registerForm.invalid">Registrarse</button>
 						</div>
 						<div class="text-center mt-3">
-							<p class="mb-0">¿Ya tienes cuenta? <a routerLink="/login">Inicia Sesión aquí</a></p>
+							<p class="mb-0">Ya tienes cuenta? <a routerLink="/login">Inicia sesion aqui</a></p>
 						</div>
 					</form>
 				</div>
