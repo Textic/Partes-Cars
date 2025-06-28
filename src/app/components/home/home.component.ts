@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
 
+/**
+ * Componente principal de la página de inicio.
+ * Muestra el carrusel, productos destacados y categorías.
+ */
 @Component({
   selector: 'app-home',
   imports: [CommonModule, NavbarComponent],
@@ -9,8 +13,10 @@ import { NavbarComponent } from "../navbar/navbar.component";
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  /** Indica si se muestra el navbar */
   showNavbar = true;
 
+  /** Slides del carrusel principal */
   carouselSlides = [
     {
       img: 'https://placehold.co/1920x500/55595c/ffffff?text=Oferta+Especial+en+Frenos',
@@ -41,6 +47,7 @@ export class HomeComponent {
     }
   ];
 
+  /** Productos destacados en la página de inicio */
   featuredProducts = [
     {
       img: 'https://placehold.co/300x200/E8E8E8/000000?text=Pastillas+de+Freno',
@@ -76,6 +83,7 @@ export class HomeComponent {
     }
   ];
 
+  /** Categorías principales de productos */
   categories = [
     {
       icon: 'fas fa-car-brake',

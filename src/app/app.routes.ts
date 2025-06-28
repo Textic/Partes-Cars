@@ -7,6 +7,10 @@ import { RegisterComponent } from './components/register/register.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 
+/**
+ * Rutas principales de la aplicación.
+ * Cada ruta define un path y el componente asociado.
+ */
 export const routes: Routes = [
 	{ path: '', redirectTo: '/home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
