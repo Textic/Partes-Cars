@@ -1,6 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
+import { FeaturedProductsApiService } from '../../services/featured-products-api.service';
+import { FeaturedProduct } from '../../services/featured-product.interface';
+import { CategoriesApiService } from '../../services/categories-api.service';
+import { Category } from '../../services/category.interface';
+import { CarouselSlidesApiService } from '../../services/carousel-slides-api.service';
+import { CarouselSlide } from '../../services/carousel-slide.interface';
+import { RouterLink } from '@angular/router';
 
 /**
  * Componente principal de la página de inicio.
@@ -8,102 +15,48 @@ import { NavbarComponent } from "../navbar/navbar.component";
  */
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, NavbarComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
-  /** Indica si se muestra el navbar */
+export class HomeComponent implements OnInit {
   showNavbar = true;
+  carouselSlides: CarouselSlide[] = [];
+  featuredProducts: FeaturedProduct[] = [];
+  categories: Category[] = [];
 
-  /** Slides del carrusel principal */
-  carouselSlides = [
-    {
-      img: 'https://placehold.co/1920x500/55595c/ffffff?text=Oferta+Especial+en+Frenos',
-      alt: 'Oferta Especial en Frenos',
-      title: '¡Oferta Especial en Sistemas de Frenos!',
-      desc: 'Hasta 30% de descuento en pastillas y discos seleccionados.',
-      link: 'products.html?category=frenos',
-      linkText: 'Ver Ofertas',
-      active: true
-    },
-    {
-      img: 'https://placehold.co/1920x500/6c757d/ffffff?text=Nuevos+Filtros+de+Aire',
-      alt: 'Nuevos Filtros de Aire',
-      title: 'Nuevos Filtros de Aire de Alto Rendimiento',
-      desc: 'Mejora la eficiencia de tu motor con nuestra nueva línea.',
-      link: 'products.html?category=filtros',
-      linkText: 'Descubrir',
-      active: false
-    },
-    {
-      img: 'https://placehold.co/1920x500/778899/ffffff?text=Accesorios+Exclusivos',
-      alt: 'Accesorios Exclusivos',
-      title: 'Accesorios Exclusivos para tu Vehículo',
-      desc: 'Personaliza tu auto con estilo y calidad.',
-      link: 'products.html?category=accesorios',
-      linkText: 'Ver Accesorios',
-      active: false
-    }
-  ];
+  constructor(
+    private featuredProductsApi: FeaturedProductsApiService,
+    private categoriesApi: CategoriesApiService,
+    private carouselSlidesApi: CarouselSlidesApiService
+  ) {}
 
-  /** Productos destacados en la página de inicio */
-  featuredProducts = [
-    {
-      img: 'https://placehold.co/300x200/E8E8E8/000000?text=Pastillas+de+Freno',
-      alt: 'Pastillas de Freno',
-      title: 'Pastillas de Freno Cerámicas',
-      desc: 'Marca XYZ - Alta durabilidad',
-      price: '$35.990',
-      link: 'product_detail.html?id=1'
-    },
-    {
-      img: 'https://placehold.co/300x200/D3D3D3/000000?text=Filtro+de+Aceite',
-      alt: 'Filtro de Aceite',
-      title: 'Filtro de Aceite Premium',
-      desc: 'Compatible con múltiples modelos',
-      price: '$12.500',
-      link: 'product_detail.html?id=2'
-    },
-    {
-      img: 'https://placehold.co/300x200/C0C0C0/000000?text=Batería+de+Auto',
-      alt: 'Batería de Auto',
-      title: 'Batería de Auto 60Ah',
-      desc: 'Larga duración y arranque seguro',
-      price: '$78.000',
-      link: 'product_detail.html?id=3'
-    },
-    {
-      img: 'https://placehold.co/300x200/A9A9A9/000000?text=Amortiguador',
-      alt: 'Amortiguador',
-      title: 'Amortiguador Delantero',
-      desc: 'Marca ACME - Confort y seguridad',
-      price: '$45.990',
-      link: 'product_detail.html?id=4'
-    }
-  ];
+  ngOnInit(): void {
+    this.featuredProductsApi.getFeaturedProducts().subscribe(data => {
+      this.featuredProducts = data;
+    });
+    this.categoriesApi.getCategories().subscribe(data => {
+      this.categories = data;
+    });
+    this.carouselSlidesApi.getCarouselSlides().subscribe(data => {
+      this.carouselSlides = data;
+    });
+  }
 
-  /** Categorías principales de productos */
-  categories = [
-    {
-      icon: 'fas fa-car-brake',
-      title: 'Frenos',
-      link: 'products.html?category=frenos'
-    },
-    {
-      icon: 'fas fa-cogs',
-      title: 'Suspensión',
-      link: 'products.html?category=suspension'
-    },
-    {
-      icon: 'fas fa-oil-can',
-      title: 'Motor',
-      link: 'products.html?category=motor'
-    },
-    {
-      icon: 'fas fa-bolt',
-      title: 'Electricidad',
-      link: 'products.html?category=electricidad'
-    }
-  ];
+  getProductLink(id: number): string {
+    return `product_detail.html?id=${id}`;
+  }
+
+  getCategoryLink(title: string): string {
+    return 'products.html?category=' + this.slugify(title);
+  }
+
+  getSlideLink(slide: CarouselSlide): string {
+    // Si tienes un campo específico para la categoría, usa ese campo en vez de linkText
+    return slide && slide.title ? 'products.html?category=' + this.slugify(slide.title) : '#';
+  }
+
+  private slugify(text: string): string {
+    return text ? text.toLowerCase().replace(/ /g, '') : '';
+  }
 }

@@ -1,89 +1,66 @@
+
 <app-navbar></app-navbar>
+<div class="container py-4">
+  <h2>CRUD de Productos Destacados</h2>
 
-<div class="container-fluid">
-	<div class="row">
-		<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse show">
-			<div class="position-sticky pt-3">
-				<ul class="nav flex-column">
-					<li class="nav-item">
-						<a class="nav-link active" aria-current="page" href="#">
-							<i class="fas fa-tachometer-alt"></i>Dashboard
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-box-open"></i>Productos
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-tags"></i>Categorías
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-file-invoice-dollar"></i>Pedidos
-						</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="#">
-							<i class="fas fa-users"></i>Usuarios
-						</a>
-					</li>
-						<li class="nav-item mt-3">
-						<a class="nav-link" routerLink="/home">
-							<i class="fas fa-arrow-left"></i>Volver al Sitio
-						</a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-
-		<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
-			<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-				<h1 class="h2">Dashboard</h1>
-			</div>
-
-			<div *ngIf="admin" class="alert alert-info">
-				¡Bienvenido, {{ admin.nombre }}! Estás en el panel de administración.
-			</div>
-
-			<div class="row">
-				<div class="col-md-4">
-					<div class="card text-white bg-primary mb-3">
-						<div class="card-header">Productos Totales</div>
-						<div class="card-body">
-							<h5 class="card-title">150</h5>
-							<p class="card-text">Productos en el inventario.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card text-white bg-success mb-3">
-						<div class="card-header">Pedidos Recientes</div>
-						<div class="card-body">
-							<h5 class="card-title">25</h5>
-							<p class="card-text">Pedidos en la última semana.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="card text-white bg-info mb-3">
-						<div class="card-header">Usuarios Registrados</div>
-						<div class="card-body">
-							<h5 class="card-title">75</h5>
-							<p class="card-text">Clientes activos.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<h2 class="mt-4">Acciones Rápidas</h2>
-			<p>
-				<a href="#" class="btn btn-lg btn-outline-secondary me-2">Gestionar Productos</a>
-				<a href="#" class="btn btn-lg btn-outline-secondary">Ver Pedidos</a>
-			</p>
-
-		</main>
+  <!-- Formulario para agregar o editar -->
+  <form (ngSubmit)="modoEdicion ? guardarEdicion() : agregarProducto()" class="mb-4">
+	<div class="row g-2 align-items-end">
+	  <div class="col-md-2">
+		<input [(ngModel)]="productoForm.img" name="img" class="form-control" placeholder="URL Imagen" required />
+	  </div>
+	  <div class="col-md-2">
+		<input [(ngModel)]="productoForm.alt" name="alt" class="form-control" placeholder="Alt" required />
+	  </div>
+	  <div class="col-md-2">
+		<input [(ngModel)]="productoForm.title" name="title" class="form-control" placeholder="Título" required />
+	  </div>
+	  <div class="col-md-2">
+		<input [(ngModel)]="productoForm.desc" name="desc" class="form-control" placeholder="Descripción" required />
+	  </div>
+	  <div class="col-md-2">
+		<input [(ngModel)]="productoForm.price" name="price" class="form-control" placeholder="Precio" required />
+	  </div>
+  <!-- El campo link se elimina, ya que ahora se genera automáticamente por el id -->
+	  <div class="col-md-2">
+		<button type="submit" class="btn btn-success w-100">{{ modoEdicion ? 'Guardar' : 'Agregar' }}</button>
+	  </div>
+	  <div class="col-md-2" *ngIf="modoEdicion">
+		<button type="button" class="btn btn-secondary w-100" (click)="cancelarEdicion()">Cancelar</button>
+	  </div>
 	</div>
+  </form>
+
+  <!-- Tabla de productos -->
+  <div class="table-responsive">
+	<table class="table table-bordered table-hover">
+	  <thead class="table-dark">
+		<tr>
+		  <th>ID</th>
+		  <th>Imagen</th>
+		  <th>Alt</th>
+		  <th>Título</th>
+		  <th>Descripción</th>
+		  <th>Precio</th>
+		  <th>Link</th>
+		  <th>Acciones</th>
+		</tr>
+	  </thead>
+	  <tbody>
+		<tr *ngFor="let producto of productos">
+		  <td>{{ producto.id }}</td>
+		  <td><img [src]="producto.img" [alt]="producto.alt" width="80" /></td>
+		  <td>{{ producto.alt }}</td>
+		  <td>{{ producto.title }}</td>
+		  <td>{{ producto.desc }}</td>
+		  <td>{{ producto.price }}</td>
+		  <td><a [routerLink]="['/product_detail']" [queryParams]="{id: producto.id}" target="_blank">Ver</a></td>
+		  <td>
+			<button class="btn btn-sm btn-primary me-2" (click)="editarProducto(producto)">Editar</button>
+			<button class="btn btn-sm btn-danger" (click)="eliminarProducto(producto)">Eliminar</button>
+		  </td>
+		</tr>
+	  </tbody>
+	</table>
+  </div>
 </div>

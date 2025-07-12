@@ -11,7 +11,7 @@
 			<div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-3 rounded">
 				<h5>{{slide.title}}</h5>
 				<p>{{slide.desc}}</p>
-				<a [href]="slide.link" class="btn btn-primary rounded-pill">{{slide.linkText}}</a>
+		<a [href]="getSlideLink(slide)" class="btn btn-primary rounded-pill">{{slide.linkText}}</a>
 			</div>
 		</div>
 	</div>
@@ -52,7 +52,7 @@
 					<h5 class="card-title">{{product.title}}</h5>
 					<p class="card-text small text-muted">{{product.desc}}</p>
 					<p class="card-text fs-5 fw-bold text-primary mt-auto">{{product.price}}</p>
-					<a [href]="product.link" class="btn btn-outline-primary rounded-pill mt-2">Ver Detalles</a>
+		  <a [routerLink]="['/product_detail']" [queryParams]="{id: product.id}" class="btn btn-outline-primary rounded-pill mt-2">Ver Detalles</a>
 				</div>
 			</div>
 		</div>
@@ -63,7 +63,7 @@
 	<h2 class="text-center section-title">Explora por Categorías</h2>
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
 		<div class="col" *ngFor="let cat of categories">
-			<a [href]="cat.link" class="text-decoration-none">
+	  <a [href]="getCategoryLink(cat.title)" class="text-decoration-none">
 				<div class="card category-card h-100 shadow-sm rounded-3 text-center">
 					<div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
 						<i [class]="cat.icon + ' fa-3x text-primary mb-3'"></i>

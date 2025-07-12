@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { Usuario } from './usuario.interface';
+import { UsuariosApiService } from '../services/usuarios-api.service';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -11,32 +12,25 @@ export class AuthService {
   public usuarioActual$ = this.usuarioActualSubject.asObservable();
 
   private readonly STORAGE_KEY = 'appUsuarios';
-  private usuarios: Usuario[] = [
-    {
-      nombre: 'Juan',
-      apellido: 'Perez',
-      correo: 'juan.perez@example.com',
-      clave: '12345678',
-      rol: 'user'
-    },
-    {
-      nombre: 'Maria',
-      apellido: 'Lopez',
-      correo: 'maria.lopez@example.com',
-      clave: '87654321',
-      rol: 'user'
-    },
-    {
-      nombre: 'Admin',
-      apellido: 'User',
-      correo: 'admin.user@example.com',
-      clave: 'admin123',
-      rol: 'admin'
-    }
-  ];
+  private usuarios: Usuario[] = [];
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private usuariosApiService: UsuariosApiService
+  ) {
+    this.cargarUsuarios();
     this.verificarEstadoInicial();
+  }
+
+  private cargarUsuarios(): void {
+    this.usuariosApiService.getUsuarios().subscribe({
+      next: (usuarios) => {
+        this.usuarios = usuarios;
+      },
+      error: () => {
+        this.usuarios = [];
+      }
+    });
   }
 
   public get usuarioActualValue(): Usuario | null {

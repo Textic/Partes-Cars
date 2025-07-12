@@ -1,0 +1,47 @@
+<app-navbar></app-navbar>
+<main class="container my-5">
+  <!-- Breadcrumbs -->
+  <nav aria-label="breadcrumb" class="mb-4 bg-light rounded-3 p-3">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a routerLink="/">Inicio</a></li>
+      <li class="breadcrumb-item"><a routerLink="/products">Productos</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ product?.title || 'Detalle del Producto' }}</li>
+    </ol>
+  </nav>
+
+  <div *ngIf="loading" class="d-flex justify-content-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Cargando...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && notFound" class="alert alert-warning text-center" role="alert">
+    <h4 class="alert-heading"><i class="fas fa-exclamation-triangle me-2"></i>Producto no Encontrado</h4>
+    <p>Lo sentimos, el producto que estás buscando no existe o fue removido.</p>
+    <hr>
+    <a routerLink="/" class="btn btn-outline-secondary rounded-pill">Volver a la página de inicio</a>
+  </div>
+
+  <ng-container *ngIf="!loading && product">
+    <div class="card border-0 shadow-sm">
+      <div class="card-body p-4 p-md-5">
+        <div class="row g-5">
+          <div class="col-lg-6 text-center">
+            <img [src]="product.img" [alt]="product.alt" class="img-fluid rounded-3 shadow-sm" />
+          </div>
+          <div class="col-lg-6 d-flex flex-column">
+            <h1 class="display-5 fw-bold">{{ product.title }}</h1>
+            <p class="lead text-muted mb-4">{{ product.desc }}</p>
+            <span class="fs-1 fw-bolder text-primary mb-4">{{ product.price }}</span>
+            <div class="mt-auto pt-4 border-top">
+              <button class="btn btn-primary btn-lg w-100 rounded-pill py-3">
+                <i class="fas fa-shopping-cart me-2"></i>
+                Agregar al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</main>
