@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FeaturedProductsApiService } from '../../services/featured-products-api.service';
+import { FeaturedProductsService } from '../../services/featured-products.service';
 import { FeaturedProduct } from '../../services/featured-product.interface';
 import { NavbarComponent } from '../navbar/navbar.component';
 
@@ -20,16 +20,27 @@ export class AdminDashboardComponent implements OnInit {
   nuevoProducto: FeaturedProduct = this.getProductoVacio();
   modoEdicion: boolean = false;
 
-  constructor(private productosApi: FeaturedProductsApiService) {}
+  constructor(private featuredProductsService: FeaturedProductsService) {}
 
   ngOnInit(): void {
-    this.cargarProductos();
-  }
-
-  cargarProductos() {
-    this.productosApi.getFeaturedProducts().subscribe(productos => {
-      this.productos = productos;
+    this.featuredProductsService.featuredProducts$.subscribe((productos) => {
+      if (productos) {
+        this.productos = productos;
+        this.featuredProductsService['featuredProducts'] = productos;
+      } else {
+        this.productos = [];
+        this.featuredProductsService['featuredProducts'] = [];
+      }
     });
+    if (typeof window !== 'undefined' && window.sessionStorage && !window.sessionStorage.getItem('featuredProducts')) {
+      this.featuredProductsService['cargarFeaturedProducts']();
+      setTimeout(() => {
+        const apiProducts = this.featuredProductsService['featuredProducts'];
+        if (apiProducts && apiProducts.length > 0) {
+          this.featuredProductsService.setFeaturedProducts(apiProducts);
+        }
+      }, 500);
+    }
   }
 
   getProductoVacio(): FeaturedProduct {
@@ -54,8 +65,17 @@ export class AdminDashboardComponent implements OnInit {
   agregarProducto() {
     if (!this.nuevoProducto.title || !this.nuevoProducto.price) return;
     this.nuevoProducto.id = this.getSiguienteId();
-    this.productos.push({ ...this.nuevoProducto });
-    this.nuevoProducto = this.getProductoVacio();
+    this.featuredProductsService.addFeaturedProduct({ ...this.nuevoProducto }).subscribe({
+      next: () => {
+        // Actualizar el estado y persistir
+        const nuevos = [...this.productos, { ...this.nuevoProducto }];
+        this.featuredProductsService.setFeaturedProducts(nuevos);
+        this.nuevoProducto = this.getProductoVacio();
+      },
+      error: (err) => {
+        alert(err.message);
+      }
+    });
   }
 
   editarProducto(producto: FeaturedProduct) {
@@ -67,7 +87,9 @@ export class AdminDashboardComponent implements OnInit {
     if (!this.productoEditando) return;
     const idx = this.productos.findIndex(p => p.id === this.productoEditando!.id);
     if (idx > -1) {
-      this.productos[idx] = { ...this.productoEditando };
+      const productosActualizados = [...this.productos];
+      productosActualizados[idx] = { ...this.productoEditando };
+      this.featuredProductsService.setFeaturedProducts(productosActualizados);
     }
     this.cancelarEdicion();
   }
@@ -78,6 +100,14 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   eliminarProducto(producto: FeaturedProduct) {
-    this.productos = this.productos.filter(p => p !== producto);
+    this.featuredProductsService.removeFeaturedProduct(producto.id).subscribe({
+      next: () => {
+        const nuevos = this.productos.filter(p => p.id !== producto.id);
+        this.featuredProductsService.setFeaturedProducts(nuevos);
+      },
+      error: (err) => {
+        alert(err.message);
+      }
+    });
   }
 }

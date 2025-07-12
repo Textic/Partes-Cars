@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
-import { FeaturedProductsApiService } from '../../services/featured-products-api.service';
+import { FeaturedProductsService } from '../../services/featured-products.service';
 import { FeaturedProduct } from '../../services/featured-product.interface';
 import { CategoriesApiService } from '../../services/categories-api.service';
 import { Category } from '../../services/category.interface';
@@ -26,14 +26,14 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
 
   constructor(
-    private featuredProductsApi: FeaturedProductsApiService,
+    private featuredProductsService: FeaturedProductsService,
     private categoriesApi: CategoriesApiService,
     private carouselSlidesApi: CarouselSlidesApiService
   ) {}
 
   ngOnInit(): void {
-    this.featuredProductsApi.getFeaturedProducts().subscribe(data => {
-      this.featuredProducts = data;
+    this.featuredProductsService.featuredProducts$.subscribe(data => {
+      this.featuredProducts = data || [];
     });
     this.categoriesApi.getCategories().subscribe(data => {
       this.categories = data;
